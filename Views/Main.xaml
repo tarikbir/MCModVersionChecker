@@ -1,0 +1,48 @@
+﻿<Window x:Class="MCModVersionChecker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MCModVersionChecker" xmlns:viewmodels="clr-namespace:MCModVersionChecker.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        mc:Ignorable="d"
+        Title="MCModVersionChecker" Height="450" Width="800">
+    <Grid>
+        <Menu>
+            <MenuItem Header="Settings" Command="{Binding OpenSettingsCommand}"/>
+        </Menu>
+        
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,-5">Mod Id List (line separated)</Label>
+
+            <TextBox Name="ModIdList" Grid.Column="0" Grid.Row="1" Text="{Binding ModIdText}" Grid.RowSpan="3"
+                     AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                     TextWrapping="Wrap" VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch" Margin="5"/>
+
+            <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Grid.RowSpan="2">
+                <Label FontSize="10">Version</Label>
+                <TextBox Name="Version" Width="100" Text="{Binding VersionText}" ToolTip="Minecraft major version"/>
+                <Label FontSize="10" Margin="0,15,0,0">Loader</Label>
+                <ComboBox Name="Loader" Width="100" ItemsSource="{Binding ModLoaderTypes}" SelectedValue="{Binding CurrentModLoader}" ToolTip="Select a mod loader"/>
+                <Button Content="Check Mods" Command="{Binding FetchModsCommand}" Width="100" Margin="0,30,0,0"/>
+            </StackPanel>
+
+            <Label Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,-5">Results</Label>
+
+            <ListBox Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding Results}" Margin="5">
+            </ListBox>
+        </Grid>
+    </Grid>
+</Window>

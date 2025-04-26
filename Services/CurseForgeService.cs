@@ -30,7 +30,7 @@ internal class CurseForgeService : ICurseForgeService
         _httpClient.DefaultRequestHeaders.Clear();
         _httpClient.DefaultRequestHeaders.Add("x-api-key", apiKey);
 
-        ModQueryModel modQueryModel = new()
+        CurseModQueryModel modQueryModel = new()
         {
             ModIds = modIds,
             FilterPcOnly = filterPcOnly

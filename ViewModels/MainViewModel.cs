@@ -1,18 +1,25 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MCModVersionChecker.Enums;
+using MCModVersionChecker.Models;
 using MCModVersionChecker.Services;
 using MCModVersionChecker.Views;
+using System.IO;
 
 namespace MCModVersionChecker.ViewModels;
 
 internal partial class MainViewModel : ObservableObject
 {
     [ObservableProperty]
+    private string statusText = "Ready";
+    private const string fetchingModsText = "Fetching mods...";
+    private int queryCount = 1;
+
+    [ObservableProperty]
     private string modIdText = "";
 
     [ObservableProperty]
-    private List<string> results = new();
+    private List<ModQueryResult> results = new();
 
     [ObservableProperty]
     private string versionText = "1.21.1";
@@ -39,12 +46,40 @@ internal partial class MainViewModel : ObservableObject
 
             var mods = await curseForgeService.GetModsByIdsAsync(ids, VersionText, (int)CurrentModLoader);
 
-            Results = mods;
+            //Results = mods;
+            queryCount++;
+            if (StatusText == fetchingModsText)
+            {
+                StatusText = $"{fetchingModsText} ({queryCount})";
+            }
+            else
+            {
+                StatusText = fetchingModsText;
+                queryCount = 1;
+            }
         }
         catch (Exception ex)
         {
-            Results.Clear();
-            Results.Add($"Error:\n{ex.Message}");
+            StatusText = "Error: " + ex.Message;
+        }
+    }
+
+    [RelayCommand]
+    private void ImportFromFolder()
+    {
+        Microsoft.Win32.OpenFolderDialog dialog = new()
+        {
+            Multiselect = false,
+            Title = "Select mods folder"
+        };
+
+        bool? result = dialog.ShowDialog();
+
+        if (result == true)
+        {
+            string fullPathToFolder = dialog.FolderName;
+            string[] files = Directory.GetFiles(fullPathToFolder);
+            ModIdText = string.Join("\r\n", files.Select(x => Path.GetFileNameWithoutExtension(x)));
         }
     }
 

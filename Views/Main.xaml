@@ -5,13 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MCModVersionChecker" xmlns:viewmodels="clr-namespace:MCModVersionChecker.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
-        Title="MCModVersionChecker" Height="450" Width="800">
+        Title="MCModVersionChecker" Height="460" Width="800">
     <Grid>
-        <Menu>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="16"/>
+        </Grid.RowDefinitions>
+        
+        <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Import Folder" Command="{Binding ImportFromFolderCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Source">
+                <MenuItem Header="Curse" IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Modrinth" IsCheckable="True"/>
+                <Separator/>
+                <MenuItem Header="By Mod ID" IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="By Mod Name" IsCheckable="True"/>
+                <MenuItem Header="By Mod File Name" IsCheckable="True"/>
+            </MenuItem>
             <MenuItem Header="Settings" Command="{Binding OpenSettingsCommand}"/>
         </Menu>
         
-        <Grid Margin="10">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -24,14 +41,14 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,-5">Mod Id List (line separated)</Label>
+            <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,-5">Mod List (line separated)</Label>
 
             <TextBox Name="ModIdList" Grid.Column="0" Grid.Row="1" Text="{Binding ModIdText}" Grid.RowSpan="3"
                      AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
                      TextWrapping="Wrap" VerticalAlignment="Stretch"
                      HorizontalAlignment="Stretch" Margin="5"/>
 
-            <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Grid.RowSpan="2">
+            <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10" Grid.RowSpan="3">
                 <Label FontSize="10">Version</Label>
                 <TextBox Name="Version" Width="100" Text="{Binding VersionText}" ToolTip="Minecraft major version"/>
                 <Label FontSize="10" Margin="0,15,0,0">Loader</Label>
@@ -41,8 +58,22 @@
 
             <Label Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,-5">Results</Label>
 
-            <ListBox Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding Results}" Margin="5">
-            </ListBox>
+            <ListView Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding Results}" Margin="5">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="{Binding ModName}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding ModId}"/>
+                            <TextBlock Text="{Binding Version}"/>
+                            <TextBlock Text="{Binding Loader}"/>
+                            <TextBlock Text="{Binding Status}" Foreground="Red"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
+        <StatusBar Grid.Row="2">
+            <TextBlock Text="{Binding StatusText}" FontSize="10" VerticalAlignment="Center" Margin="5,0,5,0"/>
+        </StatusBar>
     </Grid>
 </Window>

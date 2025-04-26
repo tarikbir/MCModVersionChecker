@@ -7,7 +7,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <StartupObject>MCModVersionChecker.App</StartupObject>
+    <ApplicationIcon>Resources\mcmvc.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\mcmvc.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\mcmvc.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
@@ -27,5 +36,9 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\mcmvc.ico" />
   </ItemGroup>
 </Project>

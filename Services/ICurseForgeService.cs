@@ -1,6 +1,8 @@
-﻿namespace MCModVersionChecker.Services;
+﻿using MCModVersionChecker.Models;
+
+namespace MCModVersionChecker.Services;
 
 internal interface ICurseForgeService
 {
-    Task<List<string>> GetModsByIdsAsync(List<string> modIds, string mcVersion, int modLoader, bool filterPcOnly = true);
+    Task<List<CurseModInfo>> GetModsByIdsAsync(List<string> modIds, string mcVersion, int modLoader, bool filterPcOnly = true);
 }

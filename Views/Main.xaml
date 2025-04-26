@@ -58,22 +58,34 @@
 
             <Label Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,-5">Results</Label>
 
-            <ListView Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding Results}" Margin="5">
+            <ListView x:Name="ResultView" Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding Results}" Margin="5" SelectedItem="{Binding SelectedResult, Mode=TwoWay}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
+                        <EventSetter Event="KeyDown" Handler="ListViewItem_KeyDown"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="{Binding ModName}" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding ModId}"/>
-                            <TextBlock Text="{Binding Version}"/>
-                            <TextBlock Text="{Binding Loader}"/>
-                            <TextBlock Text="{Binding Status}" Foreground="Red"/>
-                        </StackPanel>
+                        <Grid x:Name="Panel">
+                            <TextBlock Text="{Binding ModName}"/>
+                        </Grid>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Path=DataContext.IsFilter, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                                <Setter Property="Background" TargetName="Panel" Value="#FFA2E2A2"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Path=DataContext.IsFilter, RelativeSource={RelativeSource TemplatedParent}}" Value="False">
+                                <Setter Property="Background" TargetName="Panel" Value="#FFCE9191"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
         <StatusBar Grid.Row="2">
-            <TextBlock Text="{Binding StatusText}" FontSize="10" VerticalAlignment="Center" Margin="5,0,5,0"/>
+            <StatusBarItem>
+                <TextBlock Text="{Binding StatusText}" FontSize="10" VerticalAlignment="Center" Margin="5,0,5,0"/>
+            </StatusBarItem>
         </StatusBar>
     </Grid>
 </Window>

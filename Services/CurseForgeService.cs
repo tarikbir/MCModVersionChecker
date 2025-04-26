@@ -20,7 +20,7 @@ internal class CurseForgeService : ICurseForgeService
         };
     }
 
-    public async Task<List<string>> GetModsByIdsAsync(List<string> modIds, string mcVersion, int modLoader, bool filterPcOnly = true)
+    public async Task<List<CurseModInfo>> GetModsByIdsAsync(List<string> modIds, string mcVersion, int modLoader, bool filterPcOnly = true)
     {
         var apiKey = Properties.Settings.Default.ApiKey;
 
@@ -81,27 +81,7 @@ internal class CurseForgeService : ICurseForgeService
             allMods.Add(info);
         }
 
-        //Group all mods to filter
-        List<string> availableMods = new();
-        availableMods.Add("### Available Mods ###");
-        List<string> unavailableMods = new();
-        unavailableMods.Add("### Unavailable Mods ###");
-
-        foreach (CurseModInfo modInfo in allMods)
-        {
-            if (modInfo.IsFilterMatched)
-            {
-                availableMods.Add($"{modInfo.Name} ({modInfo.Status}) - {modInfo.Summary}");
-            }
-            else
-            {
-                unavailableMods.Add($"{modInfo.Name} ({modInfo.Status}) - {modInfo.Summary}");
-            }
-        }
-
-        availableMods.AddRange(unavailableMods);
-
-        return availableMods;
+        return allMods;
     }
 
     private static Dictionary<int, string> StatusPairs = new()

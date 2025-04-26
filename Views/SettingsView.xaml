@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MCModVersionChecker.Views"
         mc:Ignorable="d"
-        Title="Settings" Height="200" Width="300"
+        Title="Settings" Height="130" Width="300"
         WindowStartupLocation="CenterOwner" WindowStyle="SingleBorderWindow" ResizeMode="NoResize">
-    <Grid Margin="10">
-        <StackPanel Height="100" VerticalAlignment="Top">
+    <Grid Margin="8">
+        <StackPanel VerticalAlignment="Top">
             <Label>API Key</Label>
             <TextBox Name="ApiKeyText" Margin="0,5,0,0"/>
         </StackPanel>

@@ -9,6 +9,9 @@ When a new Minecraft version is released, updating a modpack can be challenging 
 - Queries CurseForge for mod availability using a list of mod IDs.
 - Nothing else yet.
 
+## Releases
+See the [Releases](https://github.com/tarikbir/MCModVersionChecker/releases).
+
 ## 🔑 CurseForge API Key
 
 To use MCModVersionChecker, you'll need a CurseForge API key.
@@ -21,8 +24,10 @@ To use MCModVersionChecker, you'll need a CurseForge API key.
 > ⚠️ The key is required to authenticate your requests to the CurseForge API.
 
 ## Planned Features
-- [ ] Scan a folder to find mods from curseforge rather than using an id list
-- [ ] Grab latest minecraft version automatically on startup (currently it's just set to 1.21.1, but it's modifiable)
-- [ ] Grab all files rather than just latest releases (bulk releases break this app or can't search for older versions as curse's api mod list query only returns recent files)
+- [ ] Modrinth support
+- [ ] Search with mod names or slugs
+- [ ] Scan a folder to find mods from curseforge/modrinth rather than using an id list
+- [ ] Grab all files rather than just latest releases (bulk releases break this app or can't search for older versions as curse's api mod list query only returns recent files) ⚠️ This may be impossible to do as curse and modrinth api both does not support this
 - [ ] Download updates (not the intended usage, but since we get all mods, why not?)
+- [ ] Grab latest minecraft version automatically on startup (currently it's just set to 1.21.1, but it's modifiable)
 - [ ] Get all mod info, including changelogs, latest version, etc.

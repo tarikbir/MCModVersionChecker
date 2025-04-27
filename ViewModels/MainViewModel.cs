@@ -6,7 +6,6 @@ using MCModVersionChecker.Services;
 using MCModVersionChecker.Views;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Input;
 
 namespace MCModVersionChecker.ViewModels;
 
@@ -14,7 +13,7 @@ internal partial class MainViewModel : ObservableObject
 {
     [ObservableProperty]
     private string statusText = "Ready";
-    private const string fetchingModsText = "Fetching mods...";
+    private string lastStatusText = string.Empty;
     private int queryCount = 1;
 
     [ObservableProperty]
@@ -45,18 +44,21 @@ internal partial class MainViewModel : ObservableObject
     {
         try
         {
-            GetCurseResults(ModIdText.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList());
+            StatusText = "Fetching mods...";
+            await GetCurseResults(ModIdText.Split("\r\n", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList());
 
             queryCount++;
-            if (StatusText == fetchingModsText)
+            if (StatusText == lastStatusText)
             {
-                StatusText = $"{fetchingModsText} ({queryCount})";
+                StatusText = $"{lastStatusText} ({queryCount})";
             }
             else
             {
-                StatusText = fetchingModsText;
+                StatusText = $"Fetched ({Results.Count}) mods.";
                 queryCount = 1;
             }
+
+            lastStatusText = StatusText;
         }
         catch (Exception ex)
         {
@@ -64,7 +66,7 @@ internal partial class MainViewModel : ObservableObject
         }
     }
 
-    private async void GetCurseResults(List<string>? ids)
+    private async Task GetCurseResults(List<string>? ids)
     {
         ICurseForgeService curseForgeService = new CurseForgeService(); //I'm too lazy to implement DI for a simple task like this. Just allocate CurseForgeService directly.
 

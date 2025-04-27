@@ -41,7 +41,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,-5">Mod List (line separated)</Label>
+            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Margin="0,0,0,-5">Mod List (line separated)</TextBlock>
 
             <TextBox Name="ModIdList" Grid.Column="0" Grid.Row="1" Text="{Binding ModIdText}" Grid.RowSpan="3"
                      AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
@@ -56,7 +56,13 @@
                 <Button Content="Check Mods" Command="{Binding FetchModsCommand}" Width="100" Margin="0,30,0,0"/>
             </StackPanel>
 
-            <Label Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" FontSize="10" Margin="0,0,0,-5">Results</Label>
+            <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Margin="0,0,0,-5">
+                Results (
+                <TextBlock Text="available" Foreground="Green"/>
+                 - 
+                <TextBlock Text="unavailable" Foreground="Red"/>
+                )
+            </TextBlock>
 
             <ListView x:Name="ResultView" Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding Results}" Margin="5" SelectedItem="{Binding SelectedResult, Mode=TwoWay}">
                 <ListView.ItemContainerStyle>
@@ -67,15 +73,15 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid x:Name="Panel">
+                        <Grid x:Name="Grid">
                             <TextBlock Text="{Binding ModName}"/>
                         </Grid>
                         <DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding Path=DataContext.IsFilter, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
-                                <Setter Property="Background" TargetName="Panel" Value="#FFA2E2A2"/>
+                                <Setter Property="Background" TargetName="Grid" Value="#FFA2E2A2"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Path=DataContext.IsFilter, RelativeSource={RelativeSource TemplatedParent}}" Value="False">
-                                <Setter Property="Background" TargetName="Panel" Value="#FFCE9191"/>
+                                <Setter Property="Background" TargetName="Grid" Value="#FFCE9191"/>
                             </DataTrigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>

@@ -18,12 +18,12 @@
                 <MenuItem Header="Import Folder" Command="{Binding ImportFromFolderCommand}"/>
             </MenuItem>
             <MenuItem Header="Source">
-                <MenuItem Header="Curse" IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Modrinth" IsCheckable="True"/>
+                <MenuItem IsEnabled="False" Header="Curse" IsCheckable="True" IsChecked="True"/>
+                <MenuItem IsEnabled="False" Header="Modrinth" IsCheckable="True"/>
                 <Separator/>
-                <MenuItem Header="By Mod ID" IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="By Mod Name" IsCheckable="True"/>
-                <MenuItem Header="By Mod File Name" IsCheckable="True"/>
+                <MenuItem IsEnabled="False" Header="By Mod ID" IsCheckable="True" IsChecked="True"/>
+                <MenuItem IsEnabled="False" Header="By Mod Name" IsCheckable="True"/>
+                <MenuItem IsEnabled="False" Header="By Mod Slug" IsCheckable="True"/>
             </MenuItem>
             <MenuItem Header="Settings" Command="{Binding OpenSettingsCommand}"/>
         </Menu>

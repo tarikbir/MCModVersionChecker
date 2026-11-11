@@ -9,13 +9,13 @@
       <Value Profile="(Default)">Modrinth</Value>
     </Setting>
     <Setting Name="PreferredLookupMode" Type="System.String" Scope="User">
-      <Value Profile="(Default)">BySlug</Value>
+      <Value Profile="(Default)">ById</Value>
     </Setting>
     <Setting Name="DefaultMcVersion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1.21.1</Value>
+      <Value Profile="(Default)">26.1</Value>
     </Setting>
     <Setting Name="DefaultModLoader" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Forge</Value>
+      <Value Profile="(Default)">Fabric</Value>
     </Setting>
   </Settings>
 </SettingsFile>

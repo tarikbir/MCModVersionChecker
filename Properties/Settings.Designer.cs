@@ -49,7 +49,7 @@ namespace MCModVersionChecker.Properties {
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("BySlug")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ById")]
         public string PreferredLookupMode {
             get {
                 return ((string)(this["PreferredLookupMode"]));
@@ -61,7 +61,7 @@ namespace MCModVersionChecker.Properties {
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.21.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("26.1")]
         public string DefaultMcVersion {
             get {
                 return ((string)(this["DefaultMcVersion"]));
@@ -73,7 +73,7 @@ namespace MCModVersionChecker.Properties {
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Forge")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Fabric")]
         public string DefaultModLoader {
             get {
                 return ((string)(this["DefaultModLoader"]));

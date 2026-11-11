@@ -29,7 +29,7 @@ internal partial class MainViewModel : ObservableObject
     private List<ModQueryResult> results = new();
 
     [ObservableProperty]
-    private string versionText = "1.21.1";
+    private string versionText = "26.1";
 
     [ObservableProperty]
     private List<ModLoaders> modLoaderTypes = new()
@@ -41,13 +41,13 @@ internal partial class MainViewModel : ObservableObject
     };
 
     [ObservableProperty]
-    private ModLoaders currentModLoader = ModLoaders.Forge;
+    private ModLoaders currentModLoader = ModLoaders.Fabric;
 
     [ObservableProperty]
     private ModSources currentSource = ModSources.Modrinth;
 
     [ObservableProperty]
-    private LookupModes currentLookupMode = LookupModes.BySlug;
+    private LookupModes currentLookupMode = LookupModes.ById;
 
     [ObservableProperty]
     private bool isModrinthSelected = true;
@@ -56,19 +56,19 @@ internal partial class MainViewModel : ObservableObject
     private bool isCurseForgeSelected;
 
     [ObservableProperty]
-    private bool isLookupById;
+    private bool isLookupById = true;
 
     [ObservableProperty]
     private bool isLookupByName;
 
     [ObservableProperty]
-    private bool isLookupBySlug = true;
+    private bool isLookupBySlug;
 
     [ObservableProperty]
-    private string listHeaderText = "Mod slugs (line separated)";
+    private string listHeaderText = "Mod IDs (line separated)";
 
     [ObservableProperty]
-    private string sourceStatusText = "Source: Modrinth · Lookup: By Slug";
+    private string sourceStatusText = "Source: Modrinth · Lookup: By ID";
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(FetchModsCommand))]
@@ -93,13 +93,17 @@ internal partial class MainViewModel : ObservableObject
             var settings = Properties.Settings.Default;
 
             VersionText = string.IsNullOrWhiteSpace(settings.DefaultMcVersion)
-                ? "1.21.1"
+                ? "26.1"
                 : settings.DefaultMcVersion;
 
             if (Enum.TryParse<ModLoaders>(settings.DefaultModLoader, out var loader) &&
                 loader is ModLoaders.Forge or ModLoaders.Fabric or ModLoaders.NeoForge or ModLoaders.Quilt)
             {
                 CurrentModLoader = loader;
+            }
+            else
+            {
+                CurrentModLoader = ModLoaders.Fabric;
             }
 
             if (Enum.TryParse<ModSources>(settings.PreferredSource, out var source))
@@ -110,7 +114,7 @@ internal partial class MainViewModel : ObservableObject
             if (Enum.TryParse<LookupModes>(settings.PreferredLookupMode, out var mode))
                 ApplyLookupMode(mode, persist: false);
             else
-                ApplyLookupMode(LookupModes.BySlug, persist: false);
+                ApplyLookupMode(LookupModes.ById, persist: false);
 
             RefreshListHeader();
             RefreshSourceStatus();

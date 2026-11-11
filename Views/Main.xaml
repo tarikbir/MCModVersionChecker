@@ -3,94 +3,177 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MCModVersionChecker" xmlns:viewmodels="clr-namespace:MCModVersionChecker.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+        xmlns:viewmodels="clr-namespace:MCModVersionChecker.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
-        Title="MCModVersionChecker" Height="460" Width="800">
-    <Grid>
+        Title="MCModVersionChecker"
+        Height="520" Width="880"
+        MinHeight="420" MinWidth="720">
+    <Grid Margin="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="16"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <Menu Grid.Row="0">
-            <MenuItem Header="File">
+            <MenuItem Header="_File">
                 <MenuItem Header="Import Folder" Command="{Binding ImportFromFolderCommand}"/>
             </MenuItem>
-            <MenuItem Header="Source">
-                <MenuItem IsEnabled="False" Header="Curse" IsCheckable="True" IsChecked="True"/>
-                <MenuItem IsEnabled="False" Header="Modrinth" IsCheckable="True"/>
+            <MenuItem Header="_Source">
+                <MenuItem Header="Modrinth"
+                         IsCheckable="True"
+                         IsChecked="{Binding IsModrinthSelected, Mode=OneWay}"
+                         Command="{Binding SelectModrinthCommand}"/>
+                <MenuItem Header="CurseForge"
+                         IsCheckable="True"
+                         IsChecked="{Binding IsCurseForgeSelected, Mode=OneWay}"
+                         Command="{Binding SelectCurseForgeCommand}"/>
                 <Separator/>
-                <MenuItem IsEnabled="False" Header="By Mod ID" IsCheckable="True" IsChecked="True"/>
-                <MenuItem IsEnabled="False" Header="By Mod Name" IsCheckable="True"/>
-                <MenuItem IsEnabled="False" Header="By Mod Slug" IsCheckable="True"/>
+                <MenuItem Header="By Mod ID"
+                         IsCheckable="True"
+                         IsChecked="{Binding IsLookupById, Mode=OneWay}"
+                         Command="{Binding SelectLookupByIdCommand}"/>
+                <MenuItem Header="By Mod Name"
+                         IsCheckable="True"
+                         IsChecked="{Binding IsLookupByName, Mode=OneWay}"
+                         Command="{Binding SelectLookupByNameCommand}"/>
+                <MenuItem Header="By Mod Slug"
+                         IsCheckable="True"
+                         IsChecked="{Binding IsLookupBySlug, Mode=OneWay}"
+                         Command="{Binding SelectLookupBySlugCommand}"/>
             </MenuItem>
-            <MenuItem Header="Settings" Command="{Binding OpenSettingsCommand}"/>
+            <MenuItem Header="Se_ttings" Command="{Binding OpenSettingsCommand}"/>
         </Menu>
-        
-        <Grid Grid.Row="1">
+
+        <Grid Grid.Row="1" Margin="12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="140"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Margin="0,0,0,-5">Mod List (line separated)</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="0"
+                       Text="{Binding ListHeaderText}"
+                       FontWeight="SemiBold"
+                       Margin="0,0,0,8"/>
 
-            <TextBox Name="ModIdList" Grid.Column="0" Grid.Row="1" Text="{Binding ModIdText}" Grid.RowSpan="3"
-                     AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
-                     TextWrapping="Wrap" VerticalAlignment="Stretch"
-                     HorizontalAlignment="Stretch" Margin="5"/>
+            <TextBox Name="ModIdList"
+                     Grid.Column="0" Grid.Row="1"
+                     Text="{Binding ModIdText, UpdateSourceTrigger=PropertyChanged}"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch"/>
 
-            <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10" Grid.RowSpan="3">
-                <Label FontSize="10">Version</Label>
-                <TextBox Name="Version" Width="100" Text="{Binding VersionText}" ToolTip="Minecraft major version"/>
-                <Label FontSize="10" Margin="0,15,0,0">Loader</Label>
-                <ComboBox Name="Loader" Width="100" ItemsSource="{Binding ModLoaderTypes}" SelectedValue="{Binding CurrentModLoader}" ToolTip="Select a mod loader"/>
-                <Button Content="Check Mods" Command="{Binding FetchModsCommand}" Width="100" Margin="0,30,0,0"/>
-            </StackPanel>
+            <Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
+                    Background="{StaticResource PanelBackgroundBrush}"
+                    BorderBrush="{StaticResource BorderBrushSubtle}"
+                    BorderThickness="1"
+                    CornerRadius="6"
+                    Padding="12"
+                    Margin="12,0">
+                <StackPanel VerticalAlignment="Top">
+                    <Label Content="Version"/>
+                    <TextBox Name="Version"
+                             Text="{Binding VersionText, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="Minecraft major version"/>
 
-            <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" Margin="0,0,0,-5">
-                Results (
-                <TextBlock Text="available" Foreground="Green"/>
-                 - 
-                <TextBlock Text="unavailable" Foreground="Red"/>
-                )
-            </TextBlock>
+                    <Label Content="Loader" Margin="0,14,0,4"/>
+                    <ComboBox Name="Loader"
+                              ItemsSource="{Binding ModLoaderTypes}"
+                              SelectedValue="{Binding CurrentModLoader}"
+                              ToolTip="Select a mod loader"/>
 
-            <ListView x:Name="ResultView" Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding Results}" Margin="5" SelectedItem="{Binding SelectedResult, Mode=TwoWay}">
+                    <Button Content="Check Mods"
+                            Command="{Binding FetchModsCommand}"
+                            Margin="0,24,0,0"
+                            HorizontalAlignment="Stretch"/>
+                </StackPanel>
+            </Border>
+
+            <DockPanel Grid.Column="2" Grid.Row="0" Margin="0,0,0,8" LastChildFill="True">
+                <TextBlock DockPanel.Dock="Right"
+                           Text="Latest"
+                           Foreground="{StaticResource TextMutedBrush}"
+                           FontWeight="SemiBold"
+                           Margin="12,0,4,0"
+                           VerticalAlignment="Center"
+                           ToolTip="Latest Minecraft version available for the selected loader"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Results (" FontWeight="SemiBold"/>
+                    <TextBlock Text="available" Foreground="{StaticResource AvailableTextBrush}" FontWeight="SemiBold"/>
+                    <TextBlock Text=" · " FontWeight="SemiBold"/>
+                    <TextBlock Text="unavailable" Foreground="{StaticResource UnavailableTextBrush}" FontWeight="SemiBold"/>
+                    <TextBlock Text=")" FontWeight="SemiBold"/>
+                </StackPanel>
+            </DockPanel>
+
+            <ListView x:Name="ResultView"
+                      Grid.Column="2" Grid.Row="1"
+                      ItemsSource="{Binding Results}"
+                      SelectedItem="{Binding SelectedResult, Mode=TwoWay}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Margin" Value="0,1"/>
                         <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
                         <EventSetter Event="KeyDown" Handler="ListViewItem_KeyDown"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsFilter}" Value="True">
+                                <Setter Property="Background" Value="{StaticResource AvailableBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsFilter}" Value="False">
+                                <Setter Property="Background" Value="{StaticResource UnavailableBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid x:Name="Grid">
-                            <TextBlock Text="{Binding ModName}"/>
+                        <Grid Margin="10,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding ModName}"
+                                       TextWrapping="NoWrap"
+                                       TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1"
+                                       Text="{Binding LatestVersionDisplay}"
+                                       Foreground="{StaticResource TextMutedBrush}"
+                                       Margin="12,0,0,0"
+                                       VerticalAlignment="Center"
+                                       ToolTip="Latest Minecraft version for selected loader"/>
                         </Grid>
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding Path=DataContext.IsFilter, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
-                                <Setter Property="Background" TargetName="Grid" Value="#FFA2E2A2"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=DataContext.IsFilter, RelativeSource={RelativeSource TemplatedParent}}" Value="False">
-                                <Setter Property="Background" TargetName="Grid" Value="#FFCE9191"/>
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
+
         <StatusBar Grid.Row="2">
             <StatusBarItem>
-                <TextBlock Text="{Binding StatusText}" FontSize="10" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                <TextBlock Text="{Binding StatusText}" Margin="8,0,8,0"/>
+            </StatusBarItem>
+            <StatusBarItem Width="160" Margin="8,0">
+                <ProgressBar Height="10"
+                             Minimum="0"
+                             Maximum="100"
+                             Value="{Binding ProgressPercent}"
+                             IsIndeterminate="{Binding IsProgressIndeterminate}"
+                             Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock Text="{Binding SourceStatusText}"
+                           Foreground="{StaticResource TextMutedBrush}"
+                           Margin="8,0,8,0"/>
             </StatusBarItem>
         </StatusBar>
     </Grid>

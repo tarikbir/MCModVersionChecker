@@ -9,20 +9,20 @@
 //------------------------------------------------------------------------------
 
 namespace MCModVersionChecker.Properties {
-    
-    
+
+
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.11.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
+
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-        
+
         public static Settings Default {
             get {
                 return defaultInstance;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
@@ -32,6 +32,54 @@ namespace MCModVersionChecker.Properties {
             }
             set {
                 this["ApiKey"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Modrinth")]
+        public string PreferredSource {
+            get {
+                return ((string)(this["PreferredSource"]));
+            }
+            set {
+                this["PreferredSource"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("BySlug")]
+        public string PreferredLookupMode {
+            get {
+                return ((string)(this["PreferredLookupMode"]));
+            }
+            set {
+                this["PreferredLookupMode"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.21.1")]
+        public string DefaultMcVersion {
+            get {
+                return ((string)(this["DefaultMcVersion"]));
+            }
+            set {
+                this["DefaultMcVersion"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Forge")]
+        public string DefaultModLoader {
+            get {
+                return ((string)(this["DefaultModLoader"]));
+            }
+            set {
+                this["DefaultModLoader"] = value;
             }
         }
     }

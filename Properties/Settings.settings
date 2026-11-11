@@ -5,5 +5,17 @@
     <Setting Name="ApiKey" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="PreferredSource" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Modrinth</Value>
+    </Setting>
+    <Setting Name="PreferredLookupMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">BySlug</Value>
+    </Setting>
+    <Setting Name="DefaultMcVersion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1.21.1</Value>
+    </Setting>
+    <Setting Name="DefaultModLoader" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Forge</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -8,6 +8,7 @@
     <UseWPF>true</UseWPF>
     <StartupObject>MCModVersionChecker.App</StartupObject>
     <ApplicationIcon>Resources\mcmvc.ico</ApplicationIcon>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

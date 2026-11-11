@@ -11,7 +11,7 @@ namespace MCModVersionChecker.Services;
 internal class ModrinthService : IModLookupService
 {
     private const string BaseUrl = "https://api.modrinth.com/v2/";
-    private const string UserAgent = "MCModVersionChecker/1.0 (github.com/tarikbir/MCModVersionChecker)";
+    private const string UserAgent = "MCModVersionChecker/1.0.0 (github.com/tarikbir/MCModVersionChecker)";
 
     private readonly HttpClient _httpClient;
 

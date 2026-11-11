@@ -1,33 +1,68 @@
 # MCModVersionChecker
 
-MCModVersionChecker is a tool designed for Minecraft mod enthusiasts who maintain their own custom modpacks. It simplifies the process of checking mod compatibility across major Minecraft versions using latest data from CurseForge.
+Windows desktop tool for people who run their own Minecraft modpacks. Given a list of mods and a target Minecraft version + loader family, it checks Modrinth or CurseForge and shows which mods already have a published file for that filter — so you can decide whether migrating the pack is worth it.
 
-When a new Minecraft version is released, updating a modpack can be challenging due to broken dependencies and missing updates. This tool helps by checking which mods in your pack have been updated and are compatible with the given game version.
+This is an **availability check**, not a pack updater and not a mod-to-mod compatibility tester. It only answers “has this mod shipped for that Minecraft version (and loader type) yet?”
 
 ## Features
 
-- Queries CurseForge for mod availability using a list of mod IDs.
-- Nothing else yet.
+- **Modrinth** and **CurseForge** as sources (switch from the Source menu)
+- Lookup by **mod ID**, **name**, or **slug**
+- Filter by Minecraft version and loader **type** (**Forge**, **Fabric**, **NeoForge**, **Quilt**) — not a specific loader build/version
+- Import a mods folder (`File → Import Folder`) — fills the list from jar file names
+- Shows whether each mod has a matching release, plus its latest known game version
+- Opens the mod page from the results list
+- Remembers preferred source, lookup mode, version, and loader
+- CurseForge API key is stored in Settings (Modrinth needs no key)
+
+## Requirements
+
+- Windows 10/11 **x64**
+- [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0) (Windows Desktop)
+
+Framework-dependent publishes need that runtime installed. Self-contained publishes do not.
+
+## CurseForge API key
+
+Only required when Source is CurseForge.
+
+1. Sign in at the [CurseForge API Console](https://console.curseforge.com/#/api-keys)
+2. Register an organization (any name is fine)
+3. Generate an API key
+4. Paste it under **Settings** in the app
+
+## Usage
+
+1. Pick **Modrinth** or **CurseForge**, then lookup mode (ID / name / slug)
+2. Paste one entry per line, or import a mods folder
+3. Set the Minecraft version and loader
+4. Click **Check Mods**
 
 ## Releases
-See the [Releases](https://github.com/tarikbir/MCModVersionChecker/releases).
 
-## 🔑 CurseForge API Key
+Prebuilt Windows binaries are on the [Releases](https://github.com/tarikbir/MCModVersionChecker/releases) page.
 
-To use MCModVersionChecker, you'll need a CurseForge API key.
+Typical release asset: `MCModVersionChecker-vX.Y.Z-win-x64.zip` containing the executable (and config if needed). See release notes for whether the build is framework-dependent or self-contained.
 
-1. Create an account or sign in at the [CurseForge API Console](https://console.curseforge.com/#/api-keys).
-2. Register an organization (you can use any name).
-3. Generate an API key.
-4. Open the **Settings** modal in the app and paste your API key there.
+## Planned
 
-> ⚠️ The key is required to authenticate your requests to the CurseForge API.
+- [ ] Auto-detect latest Minecraft version on startup
+- [ ] Richer mod details (changelog, all available versions)
+- [ ] Query older / non-latest file indexes when the public APIs allow it
 
-## Planned Features
-- [ ] Modrinth support
-- [ ] Search with mod names or slugs
-- [ ] Scan a folder to find mods from curseforge/modrinth rather than using an id list
-- [ ] Grab all files rather than just latest releases (bulk releases break this app or can't search for older versions as curse's api mod list query only returns recent files) ⚠️ This may be impossible to do as curse and modrinth api both does not support this
-- [ ] Download updates (not the intended usage, but since we get all mods, why not?)
-- [ ] Grab latest minecraft version automatically on startup (currently it's just set to 1.21.1, but it's modifiable)
-- [ ] Get all mod info, including changelogs, latest version, etc.
+## Not planned
+
+These are intentionally out of scope:
+
+- Checking whether mods work with each other (dependency / soft-compat graphs)
+- Matching a specific Forge/Fabric/NeoForge/Quilt **version** (authors rarely publish that reliably on the listing APIs)
+- Updating or rebuilding a modpack from this app
+- Keeping a modpack continuously up to date
+- Automatically downloading mods or updates from Modrinth / CurseForge
+- Ads, tracking, or monetization overlays
+
+The goal stays narrow: help you answer “do enough of my mods even exist for this Minecraft version yet?” — especially if you maintain a personal pack.
+
+## AI disclosure
+
+Parts of this project (code, docs, and tooling) were written or revised with assistance from AI coding tools. Human review and intent still define the scope and direction of the app.
